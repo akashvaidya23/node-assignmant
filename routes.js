@@ -24,9 +24,11 @@ const reqRoutes = (req, res) => {
       const parsedBody = Buffer.concat(body).toString();
       const message = parsedBody.split("=")[1];
       console.log(message);
-      res.statusCode = 302;
-      res.setHeader("Location", "/");
-      return res.end();
+      fs.writeFile("messages.txt", message, (err) => {
+        res.statusCode = 302;
+        res.setHeader("Location", "/");
+        return res.end();
+      });
     });
   } else {
     res.setHeader("Content-Type", "text/html");
